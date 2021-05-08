@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const restaurant = require('./models/restaurant')
 const Restaurant = require('./models/restaurant')
 const app = express()
 const port = 3000
@@ -46,5 +47,14 @@ app.post('/create/new', (req, res) => {
   }
   return Restaurant.create(restaurant)
     .then(() => res.redirect('/'))
+    .catch(error => console.log('error'))
+})
+
+// show
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
     .catch(error => console.log('error'))
 })
