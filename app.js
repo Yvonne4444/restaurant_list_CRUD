@@ -58,3 +58,31 @@ app.get('/restaurants/:id', (req, res) => {
     .then(restaurant => res.render('show', { restaurant }))
     .catch(error => console.log('error'))
 })
+
+// Update 頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.log('error'))
+})
+// Update 資料處理
+app.post('/restaurants/:id/edit', (req, res) => {
+  const reNew = req.body
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.name = reNew.name.trim() || restaurant.name
+      restaurant.category = reNew.category
+      restaurant.image = reNew.image || 'https://ubin.io/EtdNey'
+      restaurant.location = reNew.location
+      restaurant.phone = reNew.phone
+      restaurant.google_map = reNew.google_map
+      restaurant.rating = reNew.rating
+      restaurant.description = reNew.description
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log('error'))
+})
