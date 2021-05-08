@@ -8,6 +8,8 @@ const db = mongoose.connection
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+app.use(express.static('public'))
+
 // mongoose
 mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useUnifiedTopology: true })
 db.on('error', () => console.log('MongoDB error'))
