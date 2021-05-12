@@ -93,6 +93,11 @@ header {
   border: none;
 }
 
+span {
+  font-size: small;
+  color: #4592af;
+}
+
 @media screen and (max-width: 992px) {
   .card img {
     height: 115px;
