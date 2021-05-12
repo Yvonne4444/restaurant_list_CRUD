@@ -1,11 +1,10 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const routes = require('./routes')
 const app = express()
 const port = 3000
-const db = mongoose.connection
+require('./config/mongoose')
 
 // handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -20,8 +19,3 @@ app.use(methodOverride('_method'))
 app.use(routes)
 // listen
 app.listen(port, () => console.log(`Express is listening on localhost:${port}`))
-
-// mongoose
-mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useUnifiedTopology: true })
-db.on('error', () => console.log('MongoDB error'))
-db.once('open', () => console.log('MongoDB connected'))
