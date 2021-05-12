@@ -2,6 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
+const methodOverride = require('method-override')
 const app = express()
 const port = 3000
 const db = mongoose.connection
@@ -13,6 +14,8 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 // body-parser
 app.use(express.urlencoded({ extended: true }))
+// RESTful
+app.use(methodOverride('_method'))
 // listen
 app.listen(port, () => console.log(`Express is listening on localhost:${port}`))
 
@@ -67,7 +70,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 // Update 資料處理
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const reNew = req.body
   const id = req.params.id
   return Restaurant.findById(id)
@@ -87,7 +90,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 // Delete
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
