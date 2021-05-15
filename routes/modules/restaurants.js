@@ -9,8 +9,10 @@ router.get('/create', (req, res) => {
 // Create 資料處理
 router.post('/create', (req, res) => {
   const restaurant = req.body
-  // 名稱為空格
-  if (restaurant.name.trim().length === 0) {
+  // 必要資訊為空格
+  if (restaurant.name.trim().length === 0 ||
+    restaurant.location.trim().length === 0 ||
+    restaurant.phone.trim().length === 0) {
     return res.redirect('/')
   }
   // 未提供圖片
@@ -47,9 +49,9 @@ router.put('/:id', (req, res) => {
     .then(restaurant => {
       restaurant.name = reNew.name.trim() || restaurant.name
       restaurant.category = reNew.category
-      restaurant.image = reNew.image || 'https://ubin.io/EtdNey'
+      restaurant.image = reNew.image.trim() || 'https://ubin.io/EtdNey'
       restaurant.location = reNew.location.trim() || restaurant.location
-      restaurant.phone = reNew.phone
+      restaurant.phone = reNew.phone.trim() || restaurant.phone
       restaurant.google_map = reNew.google_map
       restaurant.rating = reNew.rating
       restaurant.description = reNew.description
