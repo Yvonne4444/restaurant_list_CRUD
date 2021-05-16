@@ -98,6 +98,13 @@ span {
   color: #4592af;
 }
 
+#select {
+  border-radius: 8px;
+  margin-top: -30px;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
 @media screen and (max-width: 992px) {
   .card img {
     height: 115px;

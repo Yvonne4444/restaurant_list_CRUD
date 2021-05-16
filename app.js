@@ -7,7 +7,21 @@ const port = 3000
 require('./config/mongoose')
 
 // handlebars
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine(
+  'handlebars',
+  exphbs({
+    defaultLayout: 'main',
+    helpers: {
+      sort: function (select, selectValue) {
+        return select === selectValue ? 'selected' : ''
+        // if (select === selectValue) {
+        //   return 'selected' // <option selected>
+        // } else {
+        //   return ''
+        // }
+      }
+    }
+ }))
 app.set('view engine', 'handlebars')
 // static files
 app.use(express.static('public'))
